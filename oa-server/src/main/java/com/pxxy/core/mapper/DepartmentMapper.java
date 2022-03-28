@@ -1,8 +1,12 @@
 package com.pxxy.core.mapper;
 
-import com.pxxy.core.entity.po.DepartmentPo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.pxxy.core.entity.po.DepartmentPo;
+import com.pxxy.core.entity.vo.DepartmentVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * <p>
@@ -14,5 +18,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface DepartmentMapper extends BaseMapper<DepartmentPo> {
+
+    @Select("SELECT * FROM department")
+    public List<DepartmentVo> getDepartmentTree();
 
 }

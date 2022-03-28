@@ -31,7 +31,7 @@ public class RolePo {
     private String id;
 
     @ApiModelProperty("角色")
-    @TableField("name")
+    @TableField("`name`")
     private String name;
 
     @ApiModelProperty("创建时间")

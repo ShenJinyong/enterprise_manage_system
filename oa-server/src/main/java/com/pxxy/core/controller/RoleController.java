@@ -1,11 +1,16 @@
 package com.pxxy.core.controller;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.pxxy.core.entity.po.RolePo;
 import com.pxxy.core.service.RoleService;
+import com.pxxy.core.service.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,16 +25,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleController {
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
     /**
      * 添加角色
      * */
-    @GetMapping("/add")
+    @PostMapping("/add")
     public void addRole(String roleName){
         RolePo rolePo = new RolePo();
         rolePo.setName(roleName);
         roleService.save(rolePo);
     }
 
+    /**
+     * 查询所有角色
+     * */
+    @GetMapping("getAllRole")
+    public List<RolePo> getAllRole(){
+        return roleService.selectAllRole();
+    }
 }

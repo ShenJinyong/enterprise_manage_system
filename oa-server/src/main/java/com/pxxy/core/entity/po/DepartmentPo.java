@@ -9,8 +9,7 @@ import com.baomidou.mybatisplus.annotation.Version;
 import java.util.Date;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -20,8 +19,9 @@ import lombok.Setter;
  * @author 沈金勇
  * @since 2022-03-28 10:06:54
  */
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("department")
 @ApiModel(value = "DepartmentPo对象", description = "")
 public class DepartmentPo {
@@ -31,11 +31,11 @@ public class DepartmentPo {
     private String id;
 
     @ApiModelProperty("部门名称")
-    @TableField("name")
+    @TableField("`name`")
     private String name;
 
     @ApiModelProperty("职责描述")
-    @TableField("describe")
+    @TableField("`describe`")
     private String describe;
 
     @ApiModelProperty("父部门id")

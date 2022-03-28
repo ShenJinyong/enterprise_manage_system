@@ -1,10 +1,13 @@
 package com.pxxy.core.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.pxxy.core.entity.po.RolePo;
 import com.pxxy.core.mapper.RoleMapper;
 import com.pxxy.core.service.RoleService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, RolePo> implements RoleService {
 
+    @Resource
+    private RoleMapper roleMapper;
+
+    public List<RolePo> selectAllRole(){
+        return roleMapper.selectList(null);
+    }
 }
