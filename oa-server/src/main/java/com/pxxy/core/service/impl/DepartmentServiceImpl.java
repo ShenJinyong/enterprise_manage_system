@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -30,24 +32,23 @@ public class DepartmentServiceImpl extends ServiceImpl<DepartmentMapper, Departm
     }
 
     public List<DepartmentVo> getDepartmentTree(){
-        DepartmentVo departmentVo = new DepartmentVo("1508337599503900674","浩云科技",null,null);
-        List<DepartmentVo> departmentList = getDepartmentList();
-        Stream<DepartmentVo> departmentVoStream = departmentList.stream().filter(
-                item -> departmentVo.getId().equals(item.getPid())
-        );
-        long count = departmentVoStream.count();
-        if(count > 1)
+        // 获取所有部门
+        List<DepartmentVo> departmentTree = departmentMapper.getDepartmentTree();
+        // 获取顶级部门的子部门
+        return departmentTree.stream()
+                .filter(item -> "0".equals(item.getPid()))
+                .peek(item -> item.setDepartmentVos(getChildDepartmentList(item,departmentTree)))
+                .sorted(Comparator.comparing(DepartmentVo::getId))
+                .collect(Collectors.toList());
     }
 
-    /**
-     * 查询所有的部门
-     * */
-    public List<DepartmentVo> getDepartmentList(){
-        return departmentMapper.getDepartmentTree();
-    }
 
-    public List<DepartmentVo> getDepartment(DepartmentVo departmentVo){
-
+    public List<DepartmentVo> getChildDepartmentList(DepartmentVo departmentVo,List<DepartmentVo> departmentTree){
+        return departmentTree.stream().filter(item -> item.getPid().equals(departmentVo.getId()))
+                // 递归查询
+                .peek(item -> item.setDepartmentVos(getChildDepartmentList(item,departmentTree)))
+                .sorted(Comparator.comparing(DepartmentVo::getId))
+                .collect(Collectors.toList());
     }
 
 }

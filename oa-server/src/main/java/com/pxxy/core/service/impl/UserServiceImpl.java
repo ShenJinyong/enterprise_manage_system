@@ -6,6 +6,9 @@ import com.pxxy.core.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -17,4 +20,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserPo> implements UserService {
 
+    @Resource
+    private UserMapper userMapper;
+
+    public List<UserPo> getAllUser(){
+        return userMapper.selectList(null);
+    }
 }

@@ -50,7 +50,7 @@ public class DepartmentController {
      * */
     @GetMapping("/getDepartmentTree")
     public List<DepartmentVo> getDepartmentTree(){
-
+        return departmentService.getDepartmentTree();
     }
 
 
